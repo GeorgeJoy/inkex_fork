@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "inkex"
-version = "1.2.0"
+version = "1.4.0"
 description = "Python extensions for Inkscape core, separated out from main repository."
 authors = ["Inkscape Authors <inkscape-devel@lists.inkscape.org>"]
 maintainers = [

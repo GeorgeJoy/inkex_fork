@@ -29,4 +29,4 @@ MIN_VERSION = (3, 7)
 if sys.version_info < MIN_VERSION:
     sys.exit("Inkscape extensions require Python 3.7 or greater.")
 
-__version__ = "1.2.0"  # Version number for inkex; may differ from Inkscape version.
+__version__ = "1.4.0"  # Version number for inkex; may differ from Inkscape version.
