@@ -475,3 +475,15 @@ class RelationshipTestCase(SvgTestCase):
         self.assertEqual(tuple(get("M").ancestors(get("M")).ids), ("L",))
         self.assertEqual(tuple(get("G").ancestors(get("H")).ids), ("C",))
         self.assertEqual(tuple(get("M").ancestors(get("H")).ids), ("L", "K", "A"))
+
+    def test_comment_callback(self):
+        """Test that foreign elements can be inserted /removed
+        (despite caching)
+
+        Fix for https://gitlab.com/inkscape/extensions/-/issues/587"""
+
+        defs = self.svg.defs
+        comment = etree.Comment("Hello World")
+        defs.extend([comment])
+        defs.append(etree.Element("testelement"))
+        defs.remove(comment)

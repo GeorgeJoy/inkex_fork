@@ -691,14 +691,14 @@ class BaseElement(IBaseElement):
         try:
             element._root = self._root
             self.root.add_to_tree_callback(element)
-        except FragmentError:
+        except (FragmentError, AttributeError):
             pass
 
     @staticmethod
     def _remove_from_tree_callback(oldtree, element):
         try:
             oldtree.root.remove_from_tree_callback(element)
-        except FragmentError:
+        except (FragmentError, AttributeError):
             pass
 
     def __element_adder(
