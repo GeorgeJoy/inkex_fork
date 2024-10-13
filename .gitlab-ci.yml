@@ -52,7 +52,7 @@ test:linux:
     - .artifacts
   parallel:
     matrix:
-      - PYTHON_VER: [ "3.8", "3.9", "3.10", "3.11", "3.12" ]
+      - PYTHON_VER: [ "3.9", "3.10", "3.11", "3.12", "3.13" ]
   script:
     - source /root/pyenv-init
     - pyenv shell ${PYTHON_VER}.0
@@ -100,11 +100,11 @@ test:coverage:
     - pylintscore=$(grep -Eo "[0-9]+.[0-9]+</td></tr></tfoot>" htmlcov/index.html | grep -Eo "[0-9]+.[0-9]+")
     - anybadge -l pylint -v $pylintscore -f htmlcov/pylint.svg 6=red 8=orange 9=yellow 10=green
   dependencies:
-    - "test:linux: [3.8]"
     - "test:linux: [3.9]"
     - "test:linux: [3.10]"
     - "test:linux: [3.11]"
     - "test:linux: [3.12]"
+    - "test:linux: [3.13]"
     - "test:windows: [3.11]"
     - "test:windows: [3.12]"
   when: always
