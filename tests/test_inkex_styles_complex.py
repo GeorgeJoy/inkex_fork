@@ -232,6 +232,44 @@ class StyleInheritanceTests(TestCase):
         ]
         self.parse_style_and_compare(tests)
 
+    def test_text_decoration_shorthand(self):
+        """Test whether shorthand properties are applied correctly"""
+        tests: List[Tuple[str, dict]] = [
+            (
+                "text-decoration: ",
+                {
+                    "text-decoration-style": "solid",
+                    "text-decoration-line": "none",
+                    "text-decoration-color": "currentcolor",
+                },
+            ),
+            (
+                "text-decoration: red wavy underline",
+                {
+                    "text-decoration-style": "wavy",
+                    "text-decoration-line": "underline",
+                    "text-decoration-color": "red",
+                },
+            ),
+            (
+                "text-decoration: red wavy underline overline blue",
+                {
+                    "text-decoration-style": "wavy",
+                    "text-decoration-line": "underline overline",
+                    "text-decoration-color": "blue",
+                },
+            ),
+            (
+                "text-decoration: blubb dotted overline",
+                {
+                    "text-decoration-style": "dotted",
+                    "text-decoration-line": "overline",
+                    "text-decoration-color": "blubb",
+                },
+            ),
+        ]
+        self.parse_style_and_compare(tests)
+
     def test_shorthand_overwrites(self):
         """Test whether shorthands correctly follow precedence: only overwrite rules which are
         defined before and not important"""

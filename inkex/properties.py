@@ -432,25 +432,26 @@ class _TextDecorationValueConverter(_ShorthandValueConverter):
             "text-decoration-style": all_properties[
                 "text-decoration-style"
             ].default_value,
-            "text-decoration-color": "currentcolor",
+            "text-decoration-color": _get_tokens_from_value("currentcolor"),
             "text-decoration-line": [],
         }
 
-        for cur in (i.serialize() for i in value):
+        for token, cur in list((i, i.serialize()) for i in value):
             if cur in ["underline", "overline", "line-through", "blink"]:
-                result["text-decoration-line"] += [cur]
+                result["text-decoration-line"].extend(
+                    [token, tinycss2.ast.WhitespaceToken(0, 0, value=" ")]
+                )
             elif cur in self.options["text-decoration-style"]:
-                result["text-decoration-style"] = cur
-            else:
-                result["text-decoration-color"] = cur
+                result["text-decoration-style"] = [token]
+            elif cur.strip():
+                result["text-decoration-color"] = [token]
 
         if len(result["text-decoration-line"]) == 0:
             result["text-decoration-line"] = all_properties[
                 "text-decoration-line"
             ].default_value
         else:
-            # Text-decoration-line can have multiple values.
-            result["text-decoration-line"] = " ".join(result["text-decoration-line"])
+            result["text-decoration-line"] = result["text-decoration-line"][:-1]
 
         return result
 
