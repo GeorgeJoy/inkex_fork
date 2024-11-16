@@ -131,6 +131,7 @@ XML Children
     </effects-menu>
 
 - ``<menu-tip>Tooltip</menu-tip>``: Tooltip of the extension.
+- ``<icon>path/to/extension-icon.svg</icon>``: Icon for the extension gallery.
 - ``<object-type>type|all</object-type>``: Specify for which selection of SVG
   elements the extension is enabled and can be triggered from within Inkscape.
   
