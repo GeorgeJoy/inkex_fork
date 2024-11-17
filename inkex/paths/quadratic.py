@@ -105,7 +105,7 @@ class QuadraticMixin(BezierComputationMixin, BezierArcComputationMixin):
                     + gamma * sqrt(c2) * np.log(logarand)
                 ) / 2
             except ZeroDivisionError:
-                s = np.NaN
+                s = np.nan
             if np.isnan(s):
                 tstar = abs(b) / (2 * abs(a))
                 if t1 < tstar:
