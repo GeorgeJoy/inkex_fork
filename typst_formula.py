@@ -87,7 +87,7 @@ class TypstFormula(TempDirMixin, inkex.GenerateExtension):
     def write_typst_code(self, stream):
         """Takes a formula and wraps it in typst"""
         stream.write(
-            f"""#set page(margin: (x: 0pt, y: 0pt))
+            f"""#set page(margin: (x: 0pt, y: 0pt), fill: none)
 #set text({self.options.font_size}pt)
 {self.options.typst_code}"""
         )
