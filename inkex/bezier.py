@@ -411,7 +411,6 @@ def subdiv(sp, flat, i=1):
 
 
 def csparea(csp):
-    """Get area in cubic sub-path"""
     r"""Get total area of cubic superpath.
 
     .. hint::
