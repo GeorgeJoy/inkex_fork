@@ -26,10 +26,10 @@
       </param>
       <param name="crop_offset"     type="float"  min="0.0"  max="9999.0" precision="3" gui-text="Offset:">5</param>
       <label appearance="header">Bleed Margin</label>
-      <param name="bleed_top"       type="float"  indent="1" min="0.0"  max="9999.0"  precision="3" gui-text="Top:">5</param>
-      <param name="bleed_bottom"    type="float"  indent="1" min="0.0"  max="9999.0"  precision="3" gui-text="Bottom:">5</param>
-      <param name="bleed_left"      type="float"  indent="1" min="0.0"  max="9999.0"  precision="3" gui-text="Left:">5</param>
-      <param name="bleed_right"     type="float"  indent="1" min="0.0"  max="9999.0"  precision="3" gui-text="Right:">5</param>
+      <param name="bleed_top"       type="float"  indent="1" min="-9999.0"  max="9999.0"  precision="3" gui-text="Top:">5</param>
+      <param name="bleed_bottom"    type="float"  indent="1" min="-9999.0"  max="9999.0"  precision="3" gui-text="Bottom:">5</param>
+      <param name="bleed_left"      type="float"  indent="1" min="-9999.0"  max="9999.0"  precision="3" gui-text="Left:">5</param>
+      <param name="bleed_right"     type="float"  indent="1" min="-9999.0"  max="9999.0"  precision="3" gui-text="Right:">5</param>
     </page>
   </param>
 
