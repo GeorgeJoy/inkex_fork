@@ -204,6 +204,11 @@
           <ref name="data_type_boolean_strict"/>
         </attribute>
       </optional>
+      <optional>
+        <attribute name="show-stderr">
+          <ref name="data_type_boolean_strict"/>
+        </attribute>
+      </optional>
       <element name="object-type">
         <choice>
           <value type="token">all</value>
