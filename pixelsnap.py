@@ -132,7 +132,7 @@ class PixelSnap(inkex.EffectExtension):
             "--max_gradient",
             type=float,
             default=0.5,
-            help="Maximum slope to consider straight (%)",
+            help="Maximum slope to consider straight (%%)",
         )
         pars.add_argument(
             "-s",
