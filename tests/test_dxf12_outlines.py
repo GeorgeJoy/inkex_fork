@@ -40,7 +40,7 @@ class TestDXF12TooManyColors(TestCase):
 
     @staticmethod
     def create_many_colors(amount):
-        """Create a very deep svg and test getting ancestors"""
+        """Create an svg with many colors to test serialization"""
         svg = '<svg xmlns="http://www.w3.org/2000/svg">'
         for i in range(amount):
             color = format(i % 0x1000000, "06x")
