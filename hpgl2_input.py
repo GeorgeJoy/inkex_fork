@@ -49,8 +49,7 @@ class Hpgl2Input(inkex.InputExtension):
             type=inkex.Boolean,
             default=True,
             help=(
-                "Bake transforms"
-                "(disabling is helpful for debugging IP/IR/SC commands)"
+                "Bake transforms (disabling is helpful for debugging IP/IR/SC commands)"
             ),
         )
         pars.add_argument(

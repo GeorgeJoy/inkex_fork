@@ -92,7 +92,7 @@ def localize():
 
 def are_near_relative(a, b, eps):
     _deprecated(
-        "inkex.are_near_relative was moved to " "inkex.units.are_near_relative", stack=2
+        "inkex.are_near_relative was moved to inkex.units.are_near_relative", stack=2
     )
     return units.are_near_relative(a, b, eps)
 

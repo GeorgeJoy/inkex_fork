@@ -34,7 +34,7 @@ class DashitComplexTest(ComparisonMixin, TestCase):
             "--id=offset1",
             "--id=offset2",
             "--id=closed1",
-            "--id=closed2" "--id=shorthand1",
+            "--id=closed2--id=shorthand1",
             "--id=multiple",
         ],
     )

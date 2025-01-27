@@ -156,9 +156,9 @@ class SynfigDocument(object):
 
         y = self.height - y
 
-        assert (
-            self.coor_svg2sif([x, y]) == vector
-        ), "sif to svg coordinate conversion error"
+        assert self.coor_svg2sif([x, y]) == vector, (
+            "sif to svg coordinate conversion error"
+        )
 
         return [x, y]
 

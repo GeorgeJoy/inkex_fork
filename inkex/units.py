@@ -145,6 +145,6 @@ def render_unit(value, unit):
     try:
         if isinstance(value, str):
             (value, unit) = parse_unit(value, default_unit=unit)
-        return f"{value:.6g}{ unit:s}"
+        return f"{value:.6g}{unit:s}"
     except TypeError:
         return ""

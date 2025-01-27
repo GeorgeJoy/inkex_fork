@@ -36,9 +36,7 @@ class ProtectiveGlobals(dict):
         # the use of an inherited dictionary class for exec globals.
         if name in self and value is not self[name]:
             assert value is self[name], (
-                "While importing {} the API name `{}` was re-defined:"
-                "\n\t1. {}"
-                "\n\t2. {}"
+                "While importing {} the API name `{}` was re-defined:\n\t1. {}\n\t2. {}"
             ).format(self["__name__"], name, repr(value), repr(self[name]))
         super(ProtectiveGlobals, self).__setitem__(name, value)
 

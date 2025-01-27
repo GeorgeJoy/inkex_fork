@@ -38,7 +38,7 @@ def protect(cls, *methods):
     for method in methods:
         if method in cls.__dict__:  # pragma: no cover
             raise RuntimeError(
-                f"{cls.__name__} in {cls.__module__} has" f" protected def {method}()"
+                f"{cls.__name__} in {cls.__module__} has protected def {method}()"
             )
 
 

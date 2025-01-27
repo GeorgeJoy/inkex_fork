@@ -479,7 +479,7 @@ class PathTest(ElementTestCase):
         path.apply_transform()
         self.assertEqual(
             path.get("d"),
-            "M 40 140 L 70 140 L 70 130 L 80 150 " "L 70 170 L 70 160 L 40 160",
+            "M 40 140 L 70 140 L 70 130 L 80 150 L 70 170 L 70 160 L 40 160",
         )
         self.assertFalse(path.transform)
 

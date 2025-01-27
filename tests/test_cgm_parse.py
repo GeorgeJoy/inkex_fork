@@ -140,12 +140,12 @@ def test_cgm_parse(binary, expected):
         # Check that we always parse an even number of bytes, even
         # though an odd length is specified
         (
-            b"\x00!\x00\xab" b'\x10"\x00\x01',
+            b'\x00!\x00\xab\x10"\x00\x01',
             [cgm_parse.BeginMetafile(""), cgm_parse.MetafileVersion(1)],
         ),
         # Absolute width
         (
-            b" \xa2\x00\x00" b"S\x82\x00\x03",
+            b" \xa2\x00\x00S\x82\x00\x03",
             [
                 cgm_parse.EdgeWidthSpecificationMode(
                     size_specification=cgm_enums.WidthSpecificationModeEnum.ABSOLUTE
@@ -155,7 +155,7 @@ def test_cgm_parse(binary, expected):
         ),
         # Scaled width
         (
-            b" \xa2\x00\x01" b"S\x84\x00\x03\x00\x00",
+            b" \xa2\x00\x01S\x84\x00\x03\x00\x00",
             [
                 cgm_parse.EdgeWidthSpecificationMode(
                     size_specification=cgm_enums.WidthSpecificationModeEnum.SCALED
@@ -165,7 +165,7 @@ def test_cgm_parse(binary, expected):
         ),
         # Direct color, one padding byte at the end
         (
-            b" B\x00\x01" b"\x10\xe2\x00\x08" b"R\xe3\xff\x00\xff\xab",
+            b" B\x00\x01\x10\xe2\x00\x08R\xe3\xff\x00\xff\xab",
             [
                 cgm_parse.ColourSelectionMode(
                     colour_selection_mode=cgm_enums.ColourSelectionModeEnum.DIRECT
@@ -178,7 +178,7 @@ def test_cgm_parse(binary, expected):
         ),
         # Indexed colour selection mode incl. padding byte
         (
-            b" B\x00\x00" b"\x11\x02\x00\x08" b"P\x81\x04\xab",
+            b" B\x00\x00\x11\x02\x00\x08P\x81\x04\xab",
             [
                 cgm_parse.ColourSelectionMode(
                     colour_selection_mode=cgm_enums.ColourSelectionModeEnum.INDEXED
@@ -189,7 +189,7 @@ def test_cgm_parse(binary, expected):
         ),
         # Some more parser modifier commands
         (
-            b"\x10\x82\x00\x10" b"\x10\xc2\x00\x10" b" b\x00\x01" b" \x82\x00\x00",
+            b"\x10\x82\x00\x10\x10\xc2\x00\x10 b\x00\x01 \x82\x00\x00",
             [
                 cgm_parse.IntegerPrecision(integer_precision=16),
                 cgm_parse.IndexPrecision(index_precision=16),

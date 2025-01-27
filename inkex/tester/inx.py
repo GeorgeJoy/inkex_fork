@@ -96,9 +96,9 @@ class InxMixin:
             inxchoices = params[param]["choices"]
             argschoices = args[param]["choices"]
             if argschoices is not None and len(argschoices) > 0:
-                assert set(inxchoices).issubset(
-                    argschoices
-                ), f"params don't match: inx={inxchoices}, py={argschoices}"
+                assert set(inxchoices).issubset(argschoices), (
+                    f"params don't match: inx={inxchoices}, py={argschoices}"
+                )
 
     def introspect_arg_parser(self, arg_parser):
         """Pull apart the arg parser to find out what we have in it"""

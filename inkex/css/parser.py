@@ -465,11 +465,9 @@ class AttributeSelector:
         case_sensitive = (
             ""
             if self.case_sensitive is None
-            else f' {"s" if self.case_sensitive else "i"}'
+            else f" {'s' if self.case_sensitive else 'i'}"
         )
-        return (
-            f"[{namespace}{self.name}{self.operator}{self.value!r}" f"{case_sensitive}]"
-        )
+        return f"[{namespace}{self.name}{self.operator}{self.value!r}{case_sensitive}]"
 
 
 class PseudoClassSelector:
@@ -505,7 +503,7 @@ class NegationSelector:
             return (0, 0, 0)
 
     def __repr__(self):
-        return f':not({", ".join(repr(sel) for sel in self.selector_list)})'
+        return f":not({', '.join(repr(sel) for sel in self.selector_list)})"
 
 
 class RelationalSelector:
@@ -520,7 +518,7 @@ class RelationalSelector:
             return (0, 0, 0)
 
     def __repr__(self):
-        return f':has({", ".join(repr(sel) for sel in self.selector_list)})'
+        return f":has({', '.join(repr(sel) for sel in self.selector_list)})"
 
 
 class MatchesAnySelector:
@@ -535,7 +533,7 @@ class MatchesAnySelector:
             return (0, 0, 0)
 
     def __repr__(self):
-        return f':is({", ".join(repr(sel) for sel in self.selector_list)})'
+        return f":is({', '.join(repr(sel) for sel in self.selector_list)})"
 
 
 class SpecificityAdjustmentSelector:
@@ -547,4 +545,4 @@ class SpecificityAdjustmentSelector:
         return (0, 0, 0)
 
     def __repr__(self):
-        return f':where({", ".join(repr(sel) for sel in self.selector_list)})'
+        return f":where({', '.join(repr(sel) for sel in self.selector_list)})"

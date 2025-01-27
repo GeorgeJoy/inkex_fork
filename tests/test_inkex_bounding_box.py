@@ -326,7 +326,7 @@ class BoundingBoxTest(TestCase):
     def test_invisible_path(self):
         path = PathElement()
 
-        path.set_path("M 0 0 " "L 10 10 " "L 10 0")
+        path.set_path("M 0 0 L 10 10 L 10 0")
         path.style["display"] = "none"
 
         self.assert_bounding_box_is_equal(path, (0, 10), (0, 10))
@@ -334,25 +334,25 @@ class BoundingBoxTest(TestCase):
     def test_path_with_move_commands_only(self):
         path = PathElement()
 
-        path.set_path("M 0 0 " "m 100 100 " "M 200 200")
+        path.set_path("M 0 0 m 100 100 M 200 200")
         self.assert_bounding_box_is_equal(path, (0, 200), (0, 200))
 
     def test_path_straight_line(self):
         path = PathElement()
 
-        path.set_path("M 0 0 " "L 10 10")
+        path.set_path("M 0 0 L 10 10")
         self.assert_bounding_box_is_equal(path, (0, 10), (0, 10))
 
     def test_path_two_straight_lines_abosolute(self):
         path = PathElement()
 
-        path.set_path("M 0 0 " "L 10 10 " "M -1 1 " "L 10 10")
+        path.set_path("M 0 0 L 10 10 M -1 1 L 10 10")
         self.assert_bounding_box_is_equal(path, (-1, 10), (0, 10))
 
     def test_path_two_straight_lines_relative(self):
         path = PathElement()
 
-        path.set_path("M 0 0 " "l 10 10 " "m -11 -9 " "l 12 12")
+        path.set_path("M 0 0 l 10 10 m -11 -9 l 12 12")
         self.assert_bounding_box_is_equal(path, (-1, 11), (0, 13))
 
     def test_path_straight_line_scaled(self):
@@ -361,7 +361,7 @@ class BoundingBoxTest(TestCase):
         scale_x = 2
         scale_y = 3
 
-        path.set_path("M 10 10 " "L 20 20")
+        path.set_path("M 10 10 L 20 20")
 
         path.transform = Transform(scale=(scale_x, scale_y))
         self.assert_bounding_box_is_equal(
@@ -372,7 +372,7 @@ class BoundingBoxTest(TestCase):
     def test_path_horizontal_line_stroke_butt_cap(self):
         path = PathElement()
 
-        path.set_path("M 0 0 " "L 1 0")
+        path.set_path("M 0 0 L 1 0")
 
         stroke_half_width = 1.0
         path.style = Style("stroke-width:{};stroke:red".format(stroke_half_width * 2))
@@ -386,7 +386,7 @@ class BoundingBoxTest(TestCase):
     def test_path_horizontal_line_stroke_round_cap(self):
         path = PathElement()
 
-        path.set_path("M 0 0 " "L 1 0")
+        path.set_path("M 0 0 L 1 0")
 
         stroke_half_width = 1.0
         path.style = Style("stroke-width:{};stroke:red".format(stroke_half_width * 2))
@@ -402,7 +402,7 @@ class BoundingBoxTest(TestCase):
     def test_path_horizontal_line_stroke_square_cap(self):
         path = PathElement()
 
-        path.set_path("M 0 0 " "L 1 0")
+        path.set_path("M 0 0 L 1 0")
 
         stroke_half_width = 1.0
         path.style = Style("stroke-width:{};stroke:red".format(stroke_half_width * 2))
@@ -422,11 +422,11 @@ class BoundingBoxTest(TestCase):
         group = Group()
 
         visible_path = PathElement()
-        visible_path.set_path("M 0 0 " "L 10 10 " "L 10 0")
+        visible_path.set_path("M 0 0 L 10 10 L 10 0")
         group.add(visible_path)
 
         invisible_path = PathElement()
-        invisible_path.set_path("M 0 0 " "L -10 -10 " "L -10 0")
+        invisible_path.set_path("M 0 0 L -10 -10 L -10 0")
         invisible_path.style["display"] = "none"
         group.add(invisible_path)
 

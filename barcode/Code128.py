@@ -153,7 +153,7 @@ def map_extra(data, chars):
 
 # The map_extra method is used to slim down the amount
 # of pre code and instead we generate the lists
-CHAR_AB = list(" !\"#$%&'()*+,-./0123456789:;<=>?@" "ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_")
+CHAR_AB = list(" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_")
 CHAR_A = map_extra(CHAR_AB, range(0, 31))  # Offset 64
 CHAR_B = map_extra(CHAR_AB, range(96, 127))  # Offset -32
 

@@ -95,7 +95,7 @@ class GtkApp:
         """Run the gtk mainloop with ctrl+C and keyboard interrupt additions"""
         if not Gtk.init_check()[0]:  # pragma: no cover
             raise RuntimeError(
-                "Gtk failed to start." " Make sure $DISPLAY variable is set.\n"
+                "Gtk failed to start. Make sure $DISPLAY variable is set.\n"
             )
         try:
             # Add a signal to force quit on Ctrl+C (just like the old days)

@@ -86,10 +86,7 @@ class PdfLatex(TempDirMixin, inkex.GenerateExtension):
             pages=1,
             pdf_poppler=True,
             export_type="svg",
-            actions=(
-                "select-all;page-fit-to-selection;"
-                "clone-unlink-recursively;vacuum-defs"
-            ),
+            actions="select-all;page-fit-to-selection;clone-unlink-recursively;vacuum-defs",
         )
 
         if not os.path.isfile(svg_file):
