@@ -66,6 +66,7 @@ ENDSEC
  0 
 EOF"""
 
+
 # DXF12 colors, derived from dxf_input.py, as (r,g,b) tuples
 COLORS: dict[tuple[int, int, int], int] = {
     tuple(inkex.Color(hex_code)): index
@@ -81,19 +82,24 @@ class Group(IntEnum):
     LAYER_NAME = 8
     START_X = 10
     START_Y = 20
-    RADIUS = 40
-    START_ANGLE = 50
-    END_ANGLE = 51
-    LINE_END_X = 11
-    LINE_END_Y = 21
     COLOR = 62
+    ENTITIES_FOLLOW = 66
+    POLYLINE_FLAG = 70
+    VERTEX_FLAG = 70
+
+
+class PolylineFlag(IntEnum):
+    none = 0
+    closed = 1
 
 
 class Entity(str, Enum):
     """DXF12 Entities"""
 
-    LINE = "LINE"
     POINT = "POINT"
+    POLYLINE = "POLYLINE"
+    VERTEX = "VERTEX"
+    SEQEND = "SEQEND"
 
     def __str__(self) -> str:
         return self.value
@@ -113,7 +119,12 @@ def find_closest_color(
 
 
 class DxfTwelve(inkex.OutputExtension):
-    """Create dxf12 output from the svg"""
+    """
+    Create dxf12 output from the svg
+
+    DXF R12 reference is publicly available from AutoDesk:
+    https://damassets.autodesk.net/content/dam/autodesk/www/developer-network/platform-technologies/autocad-dxf-archive/acad_r12_dxf.pdf
+    """
 
     def __init__(self) -> None:
         super().__init__()
@@ -140,20 +151,6 @@ class DxfTwelve(inkex.OutputExtension):
         color_code = self.color_mappings.get(rgb_tuple, 256)
         self.dxf_insert_code(Group.COLOR, format(color_code, "d"))
 
-    def dxf_line(
-        self,
-        layer: str,
-        csp: tuple[tuple[float, float], tuple[float, float]],
-        color: inkex.Color,
-    ) -> None:
-        self.dxf_start_entity(Entity.LINE, layer)
-        [[start_x, start_y], [end_x, end_y]] = csp
-        self.dxf_insert_color_code(color)
-        self.dxf_insert_code(Group.START_X, start_x)
-        self.dxf_insert_code(Group.START_Y, start_y)
-        self.dxf_insert_code(Group.LINE_END_X, end_x)
-        self.dxf_insert_code(Group.LINE_END_Y, end_y)
-
     def dxf_point(
         self, layer: str, center: tuple[float, float], color: inkex.Color
     ) -> None:
@@ -162,8 +159,38 @@ class DxfTwelve(inkex.OutputExtension):
         self.dxf_insert_code(Group.START_X, center[0])
         self.dxf_insert_code(Group.START_Y, center[1])
 
-    def path_to_dxf_lines(
-        self, layer: str, path: inkex.CubicSuperPath, color: inkex.Color
+    def dxf_polyline(
+        self,
+        layer: str,
+        points: list[tuple[float, float]],
+        color: inkex.Color,
+        closed: bool,
+    ) -> None:
+        self.dxf_start_entity(Entity.POLYLINE, layer)
+        self.dxf_insert_color_code(color)
+
+        # Other values for the polyline flag are supported, per the docs provided by autodesk.net,
+        # but we don't have them implemented here yet.
+        polyline_flag = PolylineFlag.none
+        if closed:
+            polyline_flag |= PolylineFlag.closed
+        self.dxf_insert_code(Group.POLYLINE_FLAG, polyline_flag)
+
+        # DXF12's POLYLINEs start with a statement that X=0, Y=0. This is not because they all
+        # start at the origin, but rather because in 3D mode, the Z value is used to give initial
+        # elevation.
+        self.dxf_insert_code(Group.START_X, 0.0)
+        self.dxf_insert_code(Group.START_Y, 0.0)
+        self.dxf_insert_code(Group.ENTITIES_FOLLOW, 1)
+        for x, y in points:
+            self.dxf_start_entity(Entity.VERTEX, layer)
+            self.dxf_insert_code(Group.START_X, x)
+            self.dxf_insert_code(Group.START_Y, y)
+            self.dxf_insert_code(Group.VERTEX_FLAG, 0)
+        self.dxf_start_entity(Entity.SEQEND, layer)
+
+    def path_to_dxf_polyline(
+        self, layer: str, path: inkex.CubicSuperPath, color: inkex.Color, closed: bool
     ) -> None:
         f = self.flatness
         is_flat = 0
@@ -175,10 +202,10 @@ class DxfTwelve(inkex.OutputExtension):
             except Exception:
                 f += 0.1
 
-        for subpath in path:
-            for start, end in zip(subpath, subpath[1:]):
-                self.handle += 1
-                self.dxf_line(layer, (start[1], end[1]), color)
+        vertices: list[tuple[float, float]] = [
+            vertex[1] for subpath in path for vertex in subpath
+        ]
+        self.dxf_polyline(layer, vertices, color, closed)
 
     def path_to_dxf_point(
         self, layer: str, path: inkex.CubicSuperPath, color: inkex.Color
@@ -292,15 +319,18 @@ class DxfTwelve(inkex.OutputExtension):
                 inkex.Transform(((scale, 0, 0), (0, -scale, h * scale)))
                 @ node.transform
             )
-            csp = node.path.transform(node.transform).to_superpath()
-
             node_style: inkex.Style = node.cascaded_style()
+            color: inkex.Color = node_style.get_color("stroke")
 
-            # TODO: this behavior may be unexpected?
-            if not layer.lower().endswith("drill"):
-                self.path_to_dxf_lines(layer, csp, node_style.get_color("stroke"))
-            else:
-                self.path_to_dxf_point(layer, csp, node_style.get_color("stroke"))
+            transformed_path = node.path.transform(node.transform)
+
+            if layer.lower().endswith("drill"):
+                self.path_to_dxf_point(layer, transformed_path.to_superpath(), color)
+                continue
+
+            for subpath in transformed_path.break_apart():
+                closed = any(isinstance(pe, inkex.paths.ZoneClose) for pe in subpath)
+                self.path_to_dxf_polyline(layer, subpath.to_superpath(), color, closed)
 
         self.dxf_add(R12_FOOTER)
 
