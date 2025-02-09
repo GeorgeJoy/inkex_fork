@@ -1657,6 +1657,8 @@ class DxfInput(inkex.InputExtension):
                                 vals[line[0]].append(line[1])
                             if line[0] == "8":  # 8:layer
                                 val8 = line[1]
+                            if line[0] == "62":  # color
+                                vals[line[0]].append(int(line[1]))
                             if line[0] == "70":  # flag
                                 flag70 = int(line[1])
                         else:
