@@ -43,11 +43,14 @@ from typing import (
 from argparse import ArgumentParser, Namespace
 from lxml import etree
 
-from .interfaces.IElement import IBaseElement, ISVGDocumentElement
+from .interfaces.IElement import IBaseElement
 from .utils import filename_arg, AbortExtension, ABORT_STATUS, errormsg, do_nothing
 from .elements._parser import load_svg
 from .elements._utils import NSS
 from .localization import localize
+
+if TYPE_CHECKING:
+    from .elements._svg import SvgDocumentElement
 
 
 class InkscapeExtension:
@@ -497,7 +500,7 @@ class SvgInputMixin(_Base):  # pylint: disable=too-few-public-methods, abstract-
         """Load the stream as an svg xml etree and make a backup"""
         document = load_svg(stream)
         self.original_document = copy.deepcopy(document)
-        self.svg: ISVGDocumentElement = document.getroot()
+        self.svg: SvgDocumentElement = document.getroot()
         self.svg.selection.set(*self.options.ids)
         if not self.svg.selection and self.select_all:
             self.svg.selection = self.svg.descendants().filter(*self.select_all)
