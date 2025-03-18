@@ -496,7 +496,7 @@ class Horz(LineMixin, AbsolutePathCommand):
 
 
 class horz(LineMixin, RelativePathCommand):  # pylint: disable=invalid-name
-    """Relative horz line segment"""
+    """Relative horizontal line segment"""
 
     letter = "h"
     nargs = 1

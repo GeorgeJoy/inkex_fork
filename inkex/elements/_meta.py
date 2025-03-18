@@ -121,7 +121,8 @@ class NamedView(BaseElement):
             name: label of the guide
 
         Returns:
-            the created guide"""
+            the created guide
+        """
         elem = self.add(Guide())
 
         if orient is True:
@@ -157,7 +158,8 @@ class NamedView(BaseElement):
             name: label of the guide
 
         Returns:
-            the created guide"""
+            the created guide
+        """
         if orient is True:
             elem = Guide().move_to(0, position, (0, 1))
         elif orient is False:
@@ -208,7 +210,8 @@ class NamedView(BaseElement):
         defined by (position, orientation) and is not identity (same element) as the
         first one. If such a guide exists, return it; otherwise, return None.
 
-        .. versionadded:: 1.2"""
+        .. versionadded:: 1.2
+        """
         for guide in self.get_guides():
             if Guide.guides_coincident(guide, other) and guide != other:
                 return guide
@@ -246,7 +249,8 @@ class NamedView(BaseElement):
 
         .. versionchanged:: 1.3
             If none exists, a page element with the viewbox dimensions will be
-            inserted before the new page."""
+            inserted before the new page.
+        """
         if len(self._get_pages()) == 0:
             self.add(self._equivalent_page())
         elem = Page(width=width, height=height, x=x, y=y)
@@ -264,7 +268,8 @@ class Guide(BaseElement):
     def orientation(self) -> Vector2d:
         """Vector normal to the guide, in the pre-1.0 coordinate system (y axis upwards)
 
-        .. versionadded:: 1.2"""
+        .. versionadded:: 1.2
+        """
         return Vector2d(self.get("orientation"), fallback=(1, 0))
 
     @property
@@ -272,7 +277,8 @@ class Guide(BaseElement):
         """(Clockwise) angle between the guide and the horizontal axis in degrees
         (i.e. what Inkscape 1.2+ shows as "Angle" in the guide properties)
 
-        .. versionadded:: 1.3"""
+        .. versionadded:: 1.3
+        """
         return math.degrees(math.atan2(*self.orientation))
 
     is_horizontal = property(
@@ -284,8 +290,10 @@ class Guide(BaseElement):
 
     @property
     def raw_position(self) -> Vector2d:
-        """Position of the guide handle. The y coordinate is flipped and relative
-        to the bottom of the viewbox, this is a remnant of the pre-1.0 coordinate system
+        """Position of the guide handle.
+
+        The y coordinate is flipped and relative to the bottom of the
+        viewbox, this is a remnant of the pre-1.0 coordinate system
         """
         return Vector2d(self.get("position"), fallback=(0, 0))
 
@@ -297,11 +305,14 @@ class Guide(BaseElement):
 
     @property
     def position(self) -> Vector2d:
-        """Position of the guide handle in normal coordinates, i.e. (0,0) is at
-        the top left corner of the viewbox, positive y axis pointing downwards.
+        """Position of the guide handle in normal coordinates.
+
+        This means (0,0) is at the top left corner of the viewbox,
+        positive y axis pointing downwards.
 
         This function can only be used for guides which are attached to a root
-        svg element."""
+        svg element.
+        """
         pos = self.raw_position
         return Vector2d(pos.x, self.root.viewbox_height - pos.y)
 
@@ -314,6 +325,7 @@ class Guide(BaseElement):
     def set_position(self, pos_x, pos_y, angle=None):
         """
         Move this guide to the given x,y position and optionally set its orientation.
+
         The coordinate system used is the post-1.0 coordinate system (origin in the
         top left corner, y axis pointing down), which also defines the sense of
         rotation.
@@ -387,10 +399,14 @@ class Guide(BaseElement):
     @staticmethod
     def guides_coincident(guide1, guide2):
         """Check if two guides defined by (position, orientation) and (opos, oor) look
-        identical (i.e. the position lies on the other guide AND the guide is
-        (anti)parallel to the other guide).
+        identical.
 
-        .. versionadded:: 1.2"""
+        Returns:
+            True if the position lies on the other guide AND the guide is
+            (anti)parallel to the other guide.
+
+        .. versionadded:: 1.2
+        """
         # normalize orientations first
         orientation = guide1.orientation / guide1.orientation.length
         oor = guide2.orientation / guide2.orientation.length
@@ -467,7 +483,8 @@ class Grid(BaseElement):
 class Page(BaseElement):
     """A namedview page child
 
-    .. versionadded:: 1.2"""
+    .. versionadded:: 1.2
+    """
 
     tag_name = "inkscape:page"
 

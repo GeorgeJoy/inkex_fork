@@ -40,11 +40,14 @@ from ._polygons import PathElementBase
 class TextBBMixin:  # pylint: disable=too-few-public-methods
     """Mixin to query the bounding box from Inkscape
 
-    .. versionadded:: 1.2"""
+    .. versionadded:: 1.2
+    """
 
     def get_inkscape_bbox(self: BaseElementProtocol) -> BoundingBox:
-        """Query the bbbox of a single object. This calls the Inkscape command,
-        so it is rather slow to use in a loop."""
+        """Query the bbbox of a single object.
+
+        This calls the Inkscape command, so it is rather slow to use in a loop.
+        """
         with TemporaryDirectory(prefix="inkscape-command") as tmpdir:
             svg_file = write_svg(self.root, tmpdir, "input.svg")
             out = inkscape(svg_file, "-X", "-Y", "-W", "-H", query_id=self.get_id())
@@ -175,8 +178,7 @@ class TextElement(ShapeElement, TextBBMixin):
         return sep.join(result)
 
     def shape_box(self, transform=None):
-        """
-        Returns a horrible bounding box that just contains the coord points
+        """Returns a horrible bounding box that just contains the coord points
         of the text without width or height (which is impossible to calculate)
         """
         effective_transform = Transform(transform) @ self.transform
@@ -212,8 +214,7 @@ class Tspan(ShapeElement, TextBBMixin):
         return Path()
 
     def shape_box(self, transform=None):
-        """
-        Returns a horrible bounding box that just contains the coord points
+        """Returns a horrible bounding box that just contains the coord points
         of the text without width or height (which is impossible to calculate)
         """
         effective_transform = Transform(transform) @ self.transform

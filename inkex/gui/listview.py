@@ -253,8 +253,9 @@ class TreeView(BaseView):
         """
         Create and pack a new column to this list.
 
-         name - Label in the column header
-         expand - Should the column expand
+        Args:
+            name: Label in the column header
+            expand: Should the column expand
         """
         return ViewColumn(self._list, name, expand=expand)
 
@@ -262,7 +263,7 @@ class TreeView(BaseView):
         """
         Create and attach a sorting view to this list.
 
-        see ViewSort arguments for details.
+        see :class:`ViewSort` arguments for details.
         """
         return ViewSort(self._list, *args, **kwargs)
 
@@ -424,11 +425,11 @@ class ViewSort(object):
 
 
 class ViewColumn(object):
-    """
-    Add a column to a gtk treeview.
+    """Add a column to a gtk treeview.
 
-     name - The column name used as a label.
-     expand - Set column expansion.
+    Args:
+        name: The column name used as a label.
+        expand: Set column expansion.
     """
 
     def __init__(self, widget, name, expand=False):
@@ -449,13 +450,13 @@ class ViewColumn(object):
         return renderer
 
     def add_image_renderer(self, icon, pad=0, pixmaps=None, size=None):
-        """
-        Set the image renderer
+        """Set the image renderer
 
-         icon - The function that returns the image to be dsplayed.
-         pad - The amount of padding around the image.
-         pixmaps - The pixmap manager to use to get images.
-         size - Restrict the images to this size.
+        Args:
+            icon: The function that returns the image to be displayed.
+            pad: The amount of padding around the image.
+            pixmaps: The pixmap manager to use to get images.
+            size: Restrict the images to this size.
         """
         # Manager where icons will be pulled from
         filters = [SizeFilter] if size else []
@@ -470,14 +471,13 @@ class ViewColumn(object):
         return self.add_renderer(renderer, func, expand=False)
 
     def add_text_renderer(self, text, wrap=None, template=None):
-        """
-        Set the text renderer.
+        """Set the text renderer.
 
-         text - the function that returns the text to be displayed.
-         wrap - The wrapping setting for this renderer.
-         template - A standard template used for this text markup.
+        Args:
+            text: The function that returns the text to be displayed.
+            wrap: The wrapping setting for this renderer.
+            template: A standard template used for this text markup.
         """
-
         renderer = Gtk.CellRendererText()
         if wrap is not None:
             renderer.props.wrap_width = wrap
@@ -559,4 +559,4 @@ class ViewColumn(object):
 
 
 class Separator:
-    """Reprisentation of a separator in a list"""
+    """Representation of a separator in a list"""

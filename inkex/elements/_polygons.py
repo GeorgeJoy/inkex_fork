@@ -96,7 +96,8 @@ class PathElement(PathElementBase):
 
         For details on arguments, see :func:`arc`.
 
-        .. versionadded:: 1.2"""
+        .. versionadded:: 1.2
+        """
         if abs(rx) < 1e-8 or abs(ry) < 1e-8:
             return None
         incr = end - start
@@ -134,6 +135,7 @@ class PathElement(PathElementBase):
     def arc(cls, center, rx, ry=None, arctype="", pathonly=False, **kw):  # pylint: disable=invalid-name
         """Generates a sodipodi elliptical arc (special type). Also computes the path
         that Inkscape uses under the hood.
+
         All data may be given as parseable strings or using numeric data types.
 
         Args:
@@ -245,7 +247,8 @@ class PathElement(PathElementBase):
 
         For details on arguments, see :func:`star`.
 
-        .. versionadded:: 1.2"""
+        .. versionadded:: 1.2
+        """
 
         def _star_get_xy(point, index):
             cur_arg = arg[point] + 2 * pi / sides * (index % sides)

@@ -97,7 +97,8 @@ class Filter(BaseElement):
         """DistanceLight Filter element
         defines a light source for a DiffuseLighting or SpecularLighting Filter element
 
-        .. versionadded:: 1.4"""
+        .. versionadded:: 1.4
+        """
 
         tag_name = "feDistantLight"
 
@@ -110,7 +111,8 @@ class Filter(BaseElement):
         """FuncR Filter element
         defines the alpha channel transfer for a ComponentTransfer Filter element
 
-        .. versionadded:: 1.4"""
+        .. versionadded:: 1.4
+        """
 
         tag_name = "feFuncA"
 
@@ -118,7 +120,8 @@ class Filter(BaseElement):
         """FuncR Filter element
         defines the blue channel transfer for a ComponentTransfer Filter element
 
-        .. versionadded:: 1.4"""
+        .. versionadded:: 1.4
+        """
 
         tag_name = "feFuncB"
 
@@ -126,7 +129,8 @@ class Filter(BaseElement):
         """FuncR Filter element
         defines the green channel transfer for a ComponentTransfer Filter element
 
-        .. versionadded:: 1.4"""
+        .. versionadded:: 1.4
+        """
 
         tag_name = "feFuncG"
 
@@ -134,7 +138,8 @@ class Filter(BaseElement):
         """FuncR Filter element
         defines the red channel transfer for a ComponentTransfer Filter element
 
-        .. versionadded:: 1.4"""
+        .. versionadded:: 1.4
+        """
 
         tag_name = "feFuncR"
 
@@ -157,7 +162,8 @@ class Filter(BaseElement):
         """MergeNode Filter element
         defines an input for a Merge Filter element
 
-        .. versionadded:: 1.4"""
+        .. versionadded:: 1.4
+        """
 
         tag_name = "feMergeNode"
 
@@ -175,7 +181,8 @@ class Filter(BaseElement):
         """PointLight Filter elements
         defines a light source for a DiffuseLighting or SpecularLighting Filter element
 
-        .. versionadded:: 1.4"""
+        .. versionadded:: 1.4
+        """
 
         tag_name = "fePointLight"
 
@@ -188,7 +195,8 @@ class Filter(BaseElement):
         """SpotLight Filter element
         defines a light source for a DiffuseLighting or SpecularLighting Filter element
 
-        .. versionadded:: 1.4"""
+        .. versionadded:: 1.4
+        """
 
         tag_name = "feSpotLight"
 
@@ -206,7 +214,8 @@ class Filter(BaseElement):
 class Stop(BaseElement):
     """Gradient stop
 
-    .. versionadded:: 1.1"""
+    .. versionadded:: 1.1
+    """
 
     tag_name = "stop"
 
@@ -252,7 +261,8 @@ class Pattern(BaseElement, ViewboxMixin):
     def get_viewbox(self) -> Optional[List[float]]:
         """Get the viewbox of the pattern, falling back to the href's viewbox
 
-        .. versionadded:: 1.3"""
+        .. versionadded:: 1.3
+        """
         vbox = self.get("viewBox", None)
         if vbox is None:
             if isinstance(self.href, Pattern):
@@ -263,7 +273,8 @@ class Pattern(BaseElement, ViewboxMixin):
         """If a pattern has no children, but a href, it uses the children from the href.
         Avoids infinite recursion.
 
-        .. versionadded:: 1.3"""
+        .. versionadded:: 1.3
+        """
         if (
             len(self) == 0
             and self.href is not None
@@ -277,7 +288,8 @@ class Pattern(BaseElement, ViewboxMixin):
 class Mask(GroupBase):
     """A structural object that serves as opacity mask
 
-    .. versionadded:: 1.3"""
+    .. versionadded:: 1.3
+    """
 
     tag_name = "mask"
 
@@ -295,7 +307,7 @@ class Gradient(BaseElement):
     """A gradient instruction usually in the defs."""
 
     WRAPPED_ATTRS = BaseElement.WRAPPED_ATTRS + (("gradientTransform", Transform),)
-    """Additional to the :attr:`~inkex.elements._base.BaseElement.WRAPPED_ATTRS` of 
+    """Additional to the :attr:`~inkex.elements._base.BaseElement.WRAPPED_ATTRS` of
     :class:`~inkex.elements._base.BaseElement`, ``gradientTransform`` is wrapped."""
 
     orientation_attributes = ()  # type: Tuple[str, ...]
@@ -307,7 +319,8 @@ class Gradient(BaseElement):
     def stops(self):
         """Return an ordered list of own or linked stop nodes
 
-        .. versionadded:: 1.1"""
+        .. versionadded:: 1.1
+        """
         gradcolor = (
             self.href
             if isinstance(self.href, (LinearGradient, RadialGradient))
@@ -320,20 +333,23 @@ class Gradient(BaseElement):
         # type: () -> List[float]
         """Return a list of own or linked stop offsets
 
-        .. versionadded:: 1.1"""
+        .. versionadded:: 1.1
+        """
         return [child.offset for child in self.stops]
 
     @property
     def stop_styles(self):  # type: () -> List[Style]
         """Return a list of own or linked offset styles
 
-        .. versionadded:: 1.1"""
+        .. versionadded:: 1.1
+        """
         return [child.style for child in self.stops]
 
     def remove_orientation(self):
         """Remove all orientation attributes from this element
 
-        .. versionadded:: 1.1"""
+        .. versionadded:: 1.1
+        """
         for attr in self.orientation_attributes:
             self.pop(attr)
 
@@ -345,7 +361,8 @@ class Gradient(BaseElement):
     ):
         """Interpolate with another gradient.
 
-        .. versionadded:: 1.1"""
+        .. versionadded:: 1.1
+        """
         from ..tween import GradientInterpolator
 
         return GradientInterpolator(self, other, svg).interpolate(fraction)
@@ -353,7 +370,8 @@ class Gradient(BaseElement):
     def stops_and_orientation(self):
         """Return a copy of all the stops in this gradient
 
-        .. versionadded:: 1.1"""
+        .. versionadded:: 1.1
+        """
         stops = self.copy()
         stops.remove_orientation()
         orientation = self.copy()
@@ -365,7 +383,8 @@ class Gradient(BaseElement):
         "userSpaceOnUse" as percentages of document size. See
         https://www.w3.org/TR/SVG2/pservers.html#LinearGradientAttributes for details
 
-        .. versionadded:: 1.3"""
+        .. versionadded:: 1.3
+        """
         if isinstance(value, (float, int)):
             return value
         value = value.strip()
@@ -432,25 +451,29 @@ class LinearGradient(Gradient):
     def x1(self, svg=None):
         """Get the x1 attribute
 
-        .. versionadded:: 1.3"""
+        .. versionadded:: 1.3
+        """
         return self._get_or_href("x1", "0%", svg)
 
     def x2(self, svg=None):
         """Get the x2 attribute
 
-        .. versionadded:: 1.3"""
+        .. versionadded:: 1.3
+        """
         return self._get_or_href("x2", "100%", svg)
 
     def y1(self, svg=None):
         """Get the y1 attribute
 
-        .. versionadded:: 1.3"""
+        .. versionadded:: 1.3
+        """
         return self._get_or_href("y1", "0%", svg)
 
     def y2(self, svg=None):
         """Get the y2 attribute
 
-        .. versionadded:: 1.3"""
+        .. versionadded:: 1.3
+        """
         return self._get_or_href("y2", "0%", svg)
 
 
@@ -489,31 +512,36 @@ class RadialGradient(Gradient):
     def cx(self, svg=None):
         """Get the effective cx (horizontal center) attribute in user units
 
-        .. versionadded:: 1.3"""
+        .. versionadded:: 1.3
+        """
         return self._get_or_href("cx", "50%", svg)
 
     def cy(self, svg=None):
         """Get the effective cy (vertical center) attribute in user units
 
-        .. versionadded:: 1.3"""
+        .. versionadded:: 1.3
+        """
         return self._get_or_href("cy", "50%", svg)
 
     def fx(self, svg=None):
         """Get the effective fx (horizontal focal point) attribute in user units
 
-        .. versionadded:: 1.3"""
+        .. versionadded:: 1.3
+        """
         return self._get_or_href("fx", self.cx(svg), svg)
 
     def fy(self, svg=None):
         """Get the effective fx (vertical focal point) attribute in user units
 
-        .. versionadded:: 1.3"""
+        .. versionadded:: 1.3
+        """
         return self._get_or_href("fy", self.cy(svg), svg)
 
     def r(self, svg=None):
         """Get the effective r (gradient radius) attribute in user units
 
-        .. versionadded:: 1.3"""
+        .. versionadded:: 1.3
+        """
         return self._get_or_href("r", "50%", svg)
 
 
@@ -526,7 +554,8 @@ class PathEffect(BaseElement):
 class MeshGradient(Gradient):
     """Usable MeshGradient XML base class
 
-    .. versionadded:: 1.1"""
+    .. versionadded:: 1.1
+    """
 
     tag_name = "meshgradient"
 
@@ -554,7 +583,8 @@ class MeshGradient(Gradient):
 class MeshRow(BaseElement):
     """Each row of a mesh gradient
 
-    .. versionadded:: 1.1"""
+    .. versionadded:: 1.1
+    """
 
     tag_name = "meshrow"
 
@@ -562,7 +592,8 @@ class MeshRow(BaseElement):
 class MeshPatch(BaseElement):
     """Each column or 'patch' in a mesh gradient
 
-    .. versionadded:: 1.1"""
+    .. versionadded:: 1.1
+    """
 
     tag_name = "meshpatch"
 

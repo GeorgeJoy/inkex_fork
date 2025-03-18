@@ -58,9 +58,9 @@ class CompareNumericFuzzy(Compare):
     """
     Turn all numbers into shorter standard formats
 
-    1.2345678 -> 1.2346
-    1.2300 -> 1.23, 50.0000 -> 50.0
-    50.0 -> 50
+    * 1.2345678 -> 1.2346
+    * 1.2300 -> 1.23, 50.0000 -> 50.0
+    * 50.0 -> 50
     """
 
     @staticmethod
@@ -159,7 +159,8 @@ class CompareOrderIndependentTags(Compare):
 class CompareReplacement(Compare):
     """Replace pieces to make output more comparable
 
-    .. versionadded:: 1.1"""
+    .. versionadded:: 1.1
+    """
 
     def __init__(self, *replacements):
         self.deltas = replacements
@@ -175,7 +176,8 @@ class CompareReplacement(Compare):
 class WindowsTextCompat(CompareReplacement):
     """Normalize newlines so tests comparing plain text work
 
-    .. versionadded:: 1.2"""
+    .. versionadded:: 1.2
+    """
 
     def __init__(self):
         super().__init__(("\r\n", "\n"))

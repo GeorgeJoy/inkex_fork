@@ -220,7 +220,7 @@ Other additions to inkex
    feature <Release_notes/1.2#Page_tool>`__ have been added: `MR
    extensions#499 <https://gitlab.com/inkscape/extensions/-/merge_requests/399>`__.
 
-.. _other_deprecations_to_inkex_1_2
+.. _other_deprecations_to_inkex_1_2:
 
 Other deprecations to inkex
 ----------------------------

@@ -11,9 +11,7 @@ import random
 
 
 def word_generator(text_length):
-    """
-    Generate a word of text_length size
-    """
+    """Generate a word of text_length size"""
     word = ""
 
     for _ in range(0, text_length):

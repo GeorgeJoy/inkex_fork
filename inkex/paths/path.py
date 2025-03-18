@@ -174,7 +174,8 @@ class Path(list):
         def to_non_shorthand(self) -> AbsolutePathCommand:
             """Returns an absolute non-shorthand command
 
-            .. versionadded:: 1.4"""
+            .. versionadded:: 1.4
+            """
             return self.command.to_non_shorthand(
                 self.cprevious_end_point, self.cprev2_control_point
             )
@@ -183,7 +184,8 @@ class Path(list):
             """Split this path command into two PathCommandProxy segments.
             Raises ValueError for Move commands.
 
-            .. versionadded:: 1.4"""
+            .. versionadded:: 1.4
+            """
             result = self.command.split(
                 self.cfirst_point,
                 self.cprevious_end_point,
@@ -207,7 +209,8 @@ class Path(list):
         def cpoint(self, time) -> complex:
             """Returns the coordinates of the Bezier curve evaluated at t as complex number.
 
-            .. versionadded:: 1.4"""
+            .. versionadded:: 1.4
+            """
             return self.command.cpoint(
                 self.cfirst_point,
                 self.cprevious_end_point,
@@ -218,7 +221,8 @@ class Path(list):
         def point(self, time) -> Vector2d:
             """Returns the coordinates of the Bezier curve evaluated at t as :class:`Vector2d`.
 
-            .. versionadded:: 1.4"""
+            .. versionadded:: 1.4
+            """
             return self.command.point(
                 self.cfirst_point,
                 self.cprevious_end_point,
@@ -229,7 +233,8 @@ class Path(list):
         def length(self, t0=0, t1=1, settings=LengthSettings()) -> float:
             """Get the length of the command between t0 and t1 in user units
 
-            .. versionadded:: 1.4"""
+            .. versionadded:: 1.4
+            """
             return self.command.length(
                 self.cfirst_point,
                 self.cprevious_end_point,
@@ -243,7 +248,8 @@ class Path(list):
             """Tries to compute the time t at which the path segment has the given
             length along its trajectory
 
-            .. versionadded:: 1.4"""
+            .. versionadded:: 1.4
+            """
             return self.command.ilength(
                 self.cfirst_point,
                 self.cprevious_end_point,
@@ -255,7 +261,8 @@ class Path(list):
         def cunit_tangent(self, t) -> complex:
             """Returns the unit tangent at t as complex number
 
-            .. versionadded:: 1.4"""
+            .. versionadded:: 1.4
+            """
             return self.command.cunit_tangent(
                 self.cfirst_point,
                 self.cprevious_end_point,
@@ -266,7 +273,8 @@ class Path(list):
         def unit_tangent(self, t) -> Vector2d:
             """Returns the unit tangent at t as :class:`inkex.Vector2D`
 
-            .. versionadded::  1.4"""
+            .. versionadded::  1.4
+            """
             return self.command.unit_tangent(
                 self.cfirst_point,
                 self.cprevious_end_point,
@@ -483,7 +491,8 @@ class Path(list):
     def break_apart(self) -> List[Path]:
         """Breaks apart a path into its subpaths
 
-        .. versionadded:: 1.3"""
+        .. versionadded:: 1.3
+        """
         result = [Path()]
         current = result[0]
 
@@ -532,7 +541,8 @@ class Path(list):
     def to_non_shorthand(self) -> Path:
         """Convert this path to use only absolute non-shorthand coordinates
 
-        .. versionadded:: 1.1"""
+        .. versionadded:: 1.1
+        """
         return self._to_absolute(False)
 
     def _to_absolute(self, shorthand: bool) -> Path:
@@ -671,10 +681,8 @@ class CubicSuperPath(list):
 
         For ordinary commands:
 
-        ..code ::
-
-            old last entry -> [[.., ..], [.., ..], [x1, y1]]
-            new last entry -> [[x2, y2], [x3, y3], [x3, y3]]
+        * old last entry -> [[.., ..], [.., ..], [x1, y1]]
+        * new last entry -> [[x2, y2], [x3, y3], [x3, y3]]
 
         The last tuple is duplicated (retracted handle): either it's the last command
         of the subpath, then the handle will stay retracted, or it will be replaced
@@ -728,12 +736,11 @@ class CubicSuperPath(list):
 
         item may be specified in any of the following formats:
 
-        - PathCommand
-        - [str, List[float]] - A path command letter and its arguments
-        - [[float, float], [float, float], [float, float]] - Incoming handle, node,
+        * ``PathCommand``
+        * ``[str, List[float]]`` - A path command letter and its arguments
+        * ``[[float, float], [float, float], [float, float]]`` - Incoming handle, node,
            outgoing handle.
-        - List[[float, float], [float, float], [float, float]] - An entire subpath.
-
+        * ``List[[float, float], [float, float], [float, float]]`` - An entire subpath.
 
         """
         if isinstance(item, list) and len(item) == 2 and isinstance(item[0], str):
@@ -787,7 +794,8 @@ class CubicSuperPath(list):
     def to_path(self, curves_only=False, rtol=1e-5, atol=1e-8):
         """Convert the super path back to an svg path
 
-        Arguments: see :func:`to_segments` for parameters"""
+        Arguments: see :func:`to_segments` for parameters
+        """
         return Path(list(self.to_segments(curves_only, rtol, atol)))
 
     def to_segments(self, curves_only=False, rtol=1e-5, atol=1e-8):
@@ -804,7 +812,8 @@ class CubicSuperPath(list):
             atol: absolute tolerance, passed to :func:`is_line` and
                 :func:`inkex.transforms.ImmutableVector2d.is_close`. Defaults to 1e-8.
 
-                .. versionadded:: 1.2"""
+                .. versionadded:: 1.2
+        """
         for subpath in self:
             previous = []
             for segment in subpath:
@@ -833,7 +842,8 @@ class CubicSuperPath(list):
     def is_on(pt_a, pt_b, pt_c, tol=1e-8):
         """Checks if point pt_a is on the line between points pt_b and pt_c
 
-        .. versionadded:: 1.2"""
+        .. versionadded:: 1.2
+        """
         return CubicSuperPath.collinear(pt_a, pt_b, pt_c, tol) and (
             CubicSuperPath.within(pt_a[0], pt_b[0], pt_c[0])
             if abs(pt_a[0] - pt_b[0]) > 1e-13
@@ -845,7 +855,8 @@ class CubicSuperPath(list):
         """Checks if points pt_a, pt_b, pt_c lie on the same line,
         i.e. that the cross product (b-a) x (c-a) < tol
 
-        .. versionadded:: 1.2"""
+        .. versionadded:: 1.2
+        """
         return (
             abs(
                 (pt_b[0] - pt_a[0]) * (pt_c[1] - pt_a[1])
@@ -858,7 +869,8 @@ class CubicSuperPath(list):
     def within(val_b, val_a, val_c):
         """Checks if float val_b is between val_a and val_c
 
-        .. versionadded:: 1.2"""
+        .. versionadded:: 1.2
+        """
         return val_a <= val_b <= val_c or val_c <= val_b <= val_a
 
     @staticmethod

@@ -78,8 +78,9 @@ def splitNS(name, namespaces=NSS):  # pylint: disable=invalid-name
 
 
 def natural_sort_key(key, _nsre=re.compile("([0-9]+)")):
-    """Helper for a natural sort, see
-    https://stackoverflow.com/a/16090640/3298143"""
+    """Helper for a natural sort
+
+    See https://stackoverflow.com/a/16090640/3298143"""
     return [int(text) if text.isdigit() else text.lower() for text in _nsre.split(key)]
 
 

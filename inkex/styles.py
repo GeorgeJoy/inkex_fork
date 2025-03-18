@@ -572,7 +572,7 @@ class Style(NotifyOrderedDict):
 
     @classmethod
     def _get_style(cls, attribute: str, element: BaseElement):
-        """Specified style for :param:`attribute`"""
+        """Specified style for :py:attr:`attribute`"""
         # The resolution order is:
         # - cascade -> then resolve the value, except if the value is "inherit"
         # - parent's computed value

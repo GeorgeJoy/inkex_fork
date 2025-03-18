@@ -84,6 +84,7 @@ class Use(ShapeElement):
     def shape_box(self, transform=None):
         """BoundingBox of the unclipped shape
 
-        .. versionadded:: 1.1"""
+        .. versionadded:: 1.1
+        """
         effective_transform = Transform(transform) @ self.transform
         return self.href.bounding_box(effective_transform)

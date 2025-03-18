@@ -299,7 +299,8 @@ class SvgDocumentElement(
         the value of the width attribute is returned. If the height is not defined,
         returns 0.
 
-        .. versionadded:: 1.2"""
+        .. versionadded:: 1.2
+        """
         return self.get_viewbox()[2] or self.viewport_width
 
     @property
@@ -308,7 +309,8 @@ class SvgDocumentElement(
         <https://www.w3.org/TR/SVG2/coords.html#Introduction>`_ in user units, i.e. the
         width attribute of the svg element converted to px
 
-        .. versionadded:: 1.2"""
+        .. versionadded:: 1.2
+        """
         return self.to_dimensionless(self.get("width")) or self.get_viewbox()[2]
 
     @property
@@ -319,7 +321,8 @@ class SvgDocumentElement(
         value of the height attribute is returned. If the height is not defined,
         returns 0.
 
-        .. versionadded:: 1.2"""
+        .. versionadded:: 1.2
+        """
         return self.get_viewbox()[3] or self.viewport_height
 
     @property
@@ -328,7 +331,8 @@ class SvgDocumentElement(
         <https://www.w3.org/TR/SVG2/coords.html#Introduction>`_ in user units, i.e. the
         height attribute of the svg element converted to px
 
-        .. versionadded:: 1.2"""
+        .. versionadded:: 1.2
+        """
         return self.to_dimensionless(self.get("height")) or self.get_viewbox()[3]
 
     @property
@@ -338,7 +342,8 @@ class SvgDocumentElement(
         .. versionchanged:: 1.2
             Previously, the scale as shown by the document properties was computed,
             but the computation of this in core Inkscape changed in Inkscape 1.2, so
-            this was moved to :attr:`inkscape_scale`."""
+            this was moved to :attr:`inkscape_scale`.
+        """
         return self._base_scale()
 
     @property
@@ -347,7 +352,8 @@ class SvgDocumentElement(
         page width, which is displayed as "scale" in the Inkscape document
         properties.
 
-        .. versionadded:: 1.2"""
+        .. versionadded:: 1.2
+        """
 
         viewbox_unit = (
             parse_unit(self.get("width")) or parse_unit(self.get("height")) or (0, "px")
@@ -357,7 +363,8 @@ class SvgDocumentElement(
     def _base_scale(self, unit="px"):
         """Returns what Inkscape shows as "user units per `unit`"
 
-        .. versionadded:: 1.2"""
+        .. versionadded:: 1.2
+        """
         try:
             scale_x = (
                 self.to_dimensional(self.viewport_width, unit) / self.viewbox_width
@@ -376,16 +383,19 @@ class SvgDocumentElement(
         https://www.w3.org/TR/SVG2/coords.html#ComputingAViewportsTransform
         (highly simplified)
 
-        .. versionadded:: 1.2"""
+        .. versionadded:: 1.2
+        """
         return self.scale
 
     @property
     def unit(self):
         """Returns the unit used for in the SVG document.
+
         In the case the SVG document lacks an attribute that explicitly
         defines what units are used for SVG coordinates, it tries to calculate
         the unit from the SVG width and viewBox attributes.
-        Defaults to 'px' units."""
+        Defaults to 'px' units.
+        """
         if not hasattr(self, "_unit"):
             self._unit = "px"  # Default is px
             viewbox = self.get_viewbox()
@@ -397,7 +407,8 @@ class SvgDocumentElement(
     def document_unit(self):
         """Returns the display unit (Inkscape-specific attribute) of the document
 
-        .. versionadded:: 1.2"""
+        .. versionadded:: 1.2
+        """
         return self.namedview.get("inkscape:document-units", "px")
 
     @property
@@ -446,7 +457,7 @@ class SvgDocumentElement(
             self.ids[new_id] = element
 
     def remove_from_tree_callback(self, element):
-        """ "Callback called automatically when removing an element from the tree.
+        """Callback called automatically when removing an element from the tree.
         Remove elements in the subtree of element from the the list of stylesheets
         and the ID tracker.
 

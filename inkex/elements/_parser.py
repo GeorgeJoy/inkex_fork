@@ -22,7 +22,8 @@
 """Utilities for parsing SVG documents.
 
 .. versionadded:: 1.2
-    Separated out from :py:mod:`inkex.elements._base`"""
+    Separated out from :py:mod:`inkex.elements._base`
+"""
 
 from collections import defaultdict
 from typing import DefaultDict, List, Any
@@ -59,7 +60,8 @@ class NodeBasedLookup(etree.PythonElementClassLookup):
     def find_class(cls, xpath):
         """Find the class for this type of element defined by an xpath
 
-        .. versionadded:: 1.1"""
+        .. versionadded:: 1.1
+        """
         if isinstance(xpath, type):
             return xpath
         for kls in cls.lookup_table[addNS(*splitNS(xpath.split("/")[-1])[::-1])]:

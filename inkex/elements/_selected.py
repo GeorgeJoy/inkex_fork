@@ -111,9 +111,11 @@ class ElementList(OrderedDict):
 
         All element objects must have an id to be correctly set.
 
-        >>> selection.set("rect123", "path456", "text789")
-        >>> selection.set(elem1, elem2, elem3)
-        >>> selection.set("//rect")
+        .. code-block:: python
+
+            selection.set("rect123", "path456", "text789")
+            selection.set(elem1, elem2, elem3)
+            selection.set("//rect")
         """
         self.clear()
         self.add(*ids)
@@ -138,7 +140,8 @@ class ElementList(OrderedDict):
         top
 
         .. versionadded:: 1.2
-            :func:`paint_order` has been renamed to :func:`rendering_order`"""
+            :func:`paint_order` has been renamed to :func:`rendering_order`
+        """
         new_list = ElementList(self.svg)
         # the elements are stored with their xpath index, so a natural sort order
         # '3' < '20' < '100' has to be applied
@@ -215,8 +218,8 @@ class ElementList(OrderedDict):
         return {eid: self[xid] for eid, xid in self.ids.items()}
 
     def bounding_box(self):
-        """
-        Gets a :class:`inkex.transforms.BoundingBox` object for the selected items.
+        """Gets a :class:`inkex.transforms.BoundingBox` object for the
+        selected items.
 
         Text objects have a bounding box without width or height that only
         reflects the coordinate of their anchor. If a text object is a part of

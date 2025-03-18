@@ -139,11 +139,15 @@ class Arc(BezierArcComputationMixin, AbsolutePathCommand):
             self.endpoint = args[5] + args[6] * 1j
 
     def parametrize(self, prev):
-        """Return the parametrisation of the arc:
-            (radius, phi, rot_matrix, center, theta1, deltatheta)
+        """Return the parameterization of the arc
+
         See http://www.w3.org/TR/SVG/implnote.html#ArcImplementationNotes
 
-        .. versionadded:: 1.4"""
+        Returns:
+            A tuple (radius, phi, rot_matrix, center, theta1, deltatheta)
+
+        .. versionadded:: 1.4
+        """
         # my notation roughly follows theirs
         phi = radians(self.x_axis_rotation)
         rot_matrix = exp(1j * phi)
@@ -559,14 +563,15 @@ class arc(RelativePathCommand, Arc):  # pylint: disable=invalid-name
 def arc_to_path(point, params):
     """Approximates an arc with cubic bezier segments.
 
-    Arguments:
+    Args:
         point:  Starting point (absolute coords)
         params: Arcs parameters as per
               https://www.w3.org/TR/SVG/paths.html#PathDataEllipticalArcCommands
 
-    Returns a list of triplets of points :
-    [control_point_before, node, control_point_after]
-    (first and last returned triplets are [p1, p1, *] and [*, p2, p2])
+    Returns:
+        A list of triplets of points
+        `[control_point_before, node, control_point_after]`
+        (first and last returned triplets are `[p1, p1, *]` and `[*, p2, p2]`)
     """
 
     # pylint: disable=invalid-name, too-many-locals

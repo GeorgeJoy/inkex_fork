@@ -133,7 +133,8 @@ class TestCase(MockCommandMixin, BaseCase):
         """Provide a data file from a filename, can accept directories as arguments.
 
         .. versionchanged:: 1.2
-            ``check_exists`` parameter added"""
+            ``check_exists`` parameter added
+        """
         if os.path.isabs(filename):
             # Absolute root was passed in, so we trust that (it might be a tempdir)
             full_path = os.path.join(filename, *parts)
@@ -166,7 +167,7 @@ class TestCase(MockCommandMixin, BaseCase):
     def assertEffect(self, *filename, **kwargs):  # pylint: disable=invalid-name
         """Assert an effect, capturing the output to stdout.
 
-        filename should point to a starting svg document, default is empty_svg
+        :py:attr:`filename` should point to a starting svg document, default is empty_svg
         """
         if filename:
             data_file = self.data_file(*filename)
@@ -288,7 +289,8 @@ class ComparisonMeta(type):
     """Metaclass for ComparisonMixin which creates parametrized tests that can be run
     independently. See :class:`~inkex.tester.ComparisonMixin` for details.
 
-    ..versionadded :: 1.4"""
+    ..versionadded :: 1.4
+    """
 
     def __init__(cls, name, bases, attrs):
         super().__init__(name, bases, attrs)

@@ -52,8 +52,9 @@ class CurveMixin(BezierComputationMixin, BezierArcComputationMixin):
         """Returns the nth derivative of the segment at t.
 
         .. hint:: Bezier curves can have points where their derivative vanishes.
-        If you are interested in the tangent direction, use the :func:`unit_tangent`
-        method instead."""
+            If you are interested in the tangent direction, use the :func:`unit_tangent`
+            method instead.
+        """
 
         points = self.ccontrol_points(first, prev, prev_control)
 
@@ -78,7 +79,8 @@ class CurveMixin(BezierComputationMixin, BezierArcComputationMixin):
     def poly(self, prev, prev_control, return_coeffs=False):
         """Returns a the cubic as a complex Polynomial object.
 
-        .. versionadded:: 1.4"""
+        .. versionadded:: 1.4
+        """
         points = self.ccontrol_points(0j, prev, prev_control)
         coeffs = (
             -prev + 3 * (points[0] - points[1]) + points[2],
@@ -103,7 +105,7 @@ class CurveMixin(BezierComputationMixin, BezierArcComputationMixin):
     def _abssplit(
         self, prev: complex, prev_control: complex, t: float
     ) -> Tuple[Curve, Curve]:
-        """Split this curve and return two Curves using DeCasteljau's algorithm"""
+        """Split this curve and return two Curves using De Casteljau's algorithm"""
         p1, p2, p3 = self.ccontrol_points(0j, prev, prev_control)
         p1_1 = (1 - t) * prev + t * p1
         p1_2 = (1 - t) * p1 + t * p2

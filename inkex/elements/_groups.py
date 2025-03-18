@@ -79,7 +79,8 @@ class GroupBase(ShapeElement):
 
         .. versionadded:: 1.1
             Previous :func:`bounding_box` function, returning the bounding box
-            without computing the effect of a possible clip."""
+            without computing the effect of a possible clip.
+        """
         bbox = None
         effective_transform = Transform(transform) @ self.transform
         for child in self:

@@ -42,16 +42,17 @@ class PixmapLoadError(ValueError):
 class PixmapFilter:  # pylint: disable=too-few-public-methods
     """Base class for filtering the pixmaps in a manager's output.
 
-    required - List of values required for this filter.
+    Usage:
 
-    Use:
+    .. code-block:: python
 
-    class Foo(PixmapManager):
-        filters = [ PixmapFilterFoo ]
-
+        class Foo(PixmapManager):
+            filters = [ PixmapFilterFoo ]
     """
 
     required: List[str] = []
+    """List of values required for this filter."""
+
     optional: List[str] = []
 
     def __init__(self, **kwargs):
@@ -67,7 +68,7 @@ class PixmapFilter:  # pylint: disable=too-few-public-methods
                 setattr(self, key, kwargs[key])
 
     def filter(self, img, **kwargs):
-        """Run filter, replace this methodwith your own"""
+        """Run filter, replace this method by your own"""
         raise NotImplementedError(
             "Please add 'filter' method to your PixmapFilter class %s."
             % type(self).__name__
@@ -87,11 +88,11 @@ class OverlayFilter(PixmapFilter):
     """Adds an overlay to output images, overlay can be any name that
     the owning pixmap manager can find.
 
-    overlay  : Name of overlay image
-    position : Location of the image:
-      0      - Full size (1 to 1 overlay, default)
-      (x,y)  - Percentage from one end to the other position 0-1
-    alpha    : Blending alpha, 0 - 255
+        * overlay  : Name of overlay image
+        * position : Location of the image:
+            * 0      - Full size (1 to 1 overlay, default)
+            * (x,y)  - Percentage from one end to the other position 0-1
+        * alpha    : Blending alpha, 0 - 255
 
     """
 
@@ -141,11 +142,12 @@ class OverlayFilter(PixmapFilter):
 class SizeFilter(PixmapFilter):
     """Resizes images to a certain size:
 
-    resize_mode - Way in which the size is calculated
-      0 - Best Aspect, don't grow
-      1 - Best Aspect, grow
-      2 - Cropped Aspect
-      3 - Stretch
+    :attr:`resize_mode` - Way in which the size is calculated
+
+    * 0 - Best Aspect, don't grow
+    * 1 - Best Aspect, grow
+    * 2 - Cropped Aspect
+    * 3 - Stretch
     """
 
     required = ["size"]
@@ -259,9 +261,9 @@ class PixmapManager:
         """
         There are three types of images this might return.
 
-         1. A named gtk-image such as "gtk-stop"
-         2. A file on the disk such as "/tmp/a.png"
-         3. Data as either svg or binary png
+        #. A named gtk-image such as "gtk-stop"
+        #. A file on the disk such as "/tmp/a.png"
+        #. Data as either svg or binary png
 
         All pixmaps are cached for multiple use.
         """
@@ -310,7 +312,7 @@ class PixmapManager:
             loader.write(data)
             loader.close()
         except GLib.GError as err:
-            raise PixmapLoadError(f"Faled to load pixbuf from data: {err}")
+            raise PixmapLoadError(f"Failed to load pixbuf from data: {err}")
         return loader.get_pixbuf()
 
     def load_from_name(self, name):
@@ -320,7 +322,7 @@ class PixmapManager:
             try:
                 return GdkPixbuf.Pixbuf.new_from_file(pixmap_path)
             except RuntimeError as msg:
-                raise PixmapLoadError(f"Faild to load pixmap '{pixmap_path}', {msg}")
+                raise PixmapLoadError(f"Failed to load pixmap '{pixmap_path}', {msg}")
         elif (
             self.icon_theme and "/" not in name and "." not in name and "<" not in name
         ):

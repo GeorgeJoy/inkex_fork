@@ -31,7 +31,7 @@ PROPS = {
 
 
 def protect(cls, *methods):
-    """Simple check for protecting an inherrited class from having
+    """Simple check for protecting an inherited class from having
     certain methods over-ridden"""
     if not isinstance(cls, type):
         cls = type(cls)
@@ -44,17 +44,14 @@ def protect(cls, *methods):
 
 class Window:
     """
-    This wraps gtk windows and allows for having parent windows
-
-    name = 'name-of-the-window'
-
-    Should the window be the first loaded and end gtk when closed:
-
-    primary = True/False
+    This wraps gtk windows and allows for having parent windows.
     """
 
     primary = True
+    """Should the window be the first loaded and end gtk when it is closed."""
+
     name = None
+    """The name of the window"""
 
     def __init__(self, gapp):
         self.gapp = gapp
@@ -176,8 +173,9 @@ class Window:
 
 
 class ChildWindow(Window):
-    """
-    Base class for child window objects, these child windows are typically
+    """Base class for child window objects.
+
+    These child windows are typically
     window objects in the same gtk builder file as their parents. If you just want
     to make a window that interacts with a parent window, use the normal
     Window class and call with the optional parent attribute.

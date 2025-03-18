@@ -50,7 +50,8 @@ if TYPE_CHECKING:
 class LengthSettings:
     """Settings for :func:`PathCommand.length`
 
-    .. versionadded::  1.4"""
+    .. versionadded::  1.4
+    """
 
     min_depth: int = 5
     error: float = 1e-5
@@ -60,13 +61,14 @@ class LengthSettings:
 class ILengthSettings:
     """Settings for :func:`PathCommand.ilength`
 
-    .. versionadded:: 1.4"""
+    .. versionadded:: 1.4
+    """
 
     min_depth: int = 5
 
     error: float = 1e-5
     """
-    Error tolerance for the computations of the test segment that is performed 
+    Error tolerance for the computations of the test segment that is performed
     for each iteration.
 
     The defaults from svgpathtools are ILENGTH_ERROR=ILENGTH_LENGTH_TOL=1e-12.
@@ -123,7 +125,8 @@ class PathCommand(abc.ABC):
     def reverse(self, first: ComplexLike, prev: ComplexLike) -> PathCommand:
         """Reverse path command
 
-        .. versionadded:: 1.1"""
+        .. versionadded:: 1.1
+        """
         raise NotImplementedError
 
     def to_non_shorthand(
@@ -133,7 +136,8 @@ class PathCommand(abc.ABC):
     ) -> AbsolutePathCommand:
         """Return an absolute non-shorthand command
 
-        .. versionadded:: 1.1"""
+        .. versionadded:: 1.1
+        """
         return self.to_absolute(prev)
 
     # The precision of the numbers when converting to string
@@ -391,7 +395,8 @@ class PathCommand(abc.ABC):
     ) -> complex:
         """Returns the coordinates of the Bezier curve evaluated at t as complex number.
 
-        .. versionadded:: 1.4"""
+        .. versionadded:: 1.
+        """
         return self._cpoint(first, prev, prev_control, self.__check_t(t, False))
 
     def point(
@@ -399,7 +404,8 @@ class PathCommand(abc.ABC):
     ) -> Vector2d:
         """Returns the coordinates of the Bezier curve evaluated at t as :class:`Vector2d`.
 
-        .. versionadded:: 1.4"""
+        .. versionadded:: 1.4
+        """
         return Vector2d(
             self.cpoint(
                 complex(first or 0), complex(prev or 0), complex(prev_control or 0), t
@@ -417,7 +423,8 @@ class PathCommand(abc.ABC):
         """Returns two segments, whose union is this segment and which join at
         self.point(t).
 
-        .. versionadded:: 1.4"""
+        .. versionadded:: 1.4
+        """
         # no simplification here, we want to preserve the original type
         return self._split(
             complex(first),
@@ -444,7 +451,8 @@ class PathCommand(abc.ABC):
     ) -> float:
         """Returns the length of the segment between t0 and t1.
 
-        .. versionadded:: 1.4"""
+        .. versionadded:: 1.4
+        """
         # pylint: disable=protected-access
         return self._length(
             complex(first),
@@ -477,7 +485,8 @@ class PathCommand(abc.ABC):
         """Returns a float ``t``, such that ``self.length(0, t)`` is approximately
         ``length``.
 
-        .. versionadded:: 1.4"""
+        .. versionadded:: 1.4
+        """
         # pylint: disable=protected-access
         return self._ilength(
             complex(first), complex(prev), complex(prev_control), length, settings
@@ -565,7 +574,8 @@ class AbsolutePathCommand(PathCommand):
 class BezierArcComputationMixin:
     """Functionality that works the same way for Arcs, Cubic and Quadratic
 
-    .. versionadded:: 1.4"""
+    .. versionadded:: 1.4
+    """
 
     _cpoint: Callable[[complex, complex, complex, float], complex]
     _cderivative: Callable[..., complex]
@@ -693,7 +703,8 @@ class BezierArcComputationMixin:
 class BezierComputationMixin:
     """Functionality that works the same for all Beziers (Quadratic, Cubic)
 
-    .. versionadded:: 1.4"""
+    .. versionadded:: 1.4
+    """
 
     def _bpoints(self, prev, prev_prev):
         return (prev,) + self.ccontrol_points(0j, prev, prev_prev)
@@ -702,7 +713,8 @@ class BezierComputationMixin:
         """Returns the unit tangent of the segment at t.
 
         Ported from https://github.com/mathandy/svgpathtools/blob/19df25b99b405ec4fc7616b58384eca7879b6fd4/svgpathtools/path.py#L348
-        (MIT licensed)"""
+        (MIT licensed)
+        """
 
         dseg = self._cderivative(0j, prev, prev_prev, t)
 

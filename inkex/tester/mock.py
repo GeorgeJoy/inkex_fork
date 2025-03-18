@@ -90,10 +90,12 @@ class MockMixin:
 
     Mocks are stored in an array attached to the test class (not instance!) which
     ensures that mocks can only ever be setUp once and can never be reset over
-    themselves. (just in case this looks weird at first glance)
+    themselves. (just in case this looks weird at first glance):
 
-    class SomeTest(MockingMixin, TestBase):
-        mocks = [(sys, 'exit', NoSystemExit("Nope!")]
+    .. code-block:: python
+
+        class SomeTest(MockingMixin, TestBase):
+            mocks = [(sys, 'exit', NoSystemExit("Nope!")]
     """
 
     mocks = []  # type: List[Tuple[Any, str, Any]]
@@ -397,9 +399,7 @@ class MockCommandMixin(MockMixin):
         return command_dir
 
     def load_call(self, program, key, files):
-        """
-        Load the given call
-        """
+        """Load the given call"""
         fname = self.get_call_filename(program, key, create=False)
         with open(fname, "rb") as fhl:
             msg = EmailParser().parsestr(fhl.read().decode("utf-8"))
@@ -427,10 +427,11 @@ class MockCommandMixin(MockMixin):
         return stdout
 
     def save_call(self, program, key, stdout, files, msg, ext="output"):  # pylint: disable=too-many-arguments
-        """
-        Saves the results from the call into a debug output file, the resulting files
-        should be a Mime msg file format with each attachment being one of the input
-        files as well as any stdin and arguments used in the call.
+        """Saves the results from the call into a debug output file.
+
+        The resulting files should be a Mime msg file format with each
+        attachment being one of the input files as well as any stdin and
+        arguments used in the call.
         """
         if stdout is not None and stdout.strip():
             # The stdout is counted as the msg body here
