@@ -13,3 +13,6 @@
 [submodule "other/extension-afread"]
 	path = other/extension-afdesign
 	url = https://gitlab.com/inkscape/extras/extension-afdesign.git
+[submodule "other/extension-curve"]
+	path = other/extension-curve
+	url = https://gitlab.com/inkscape/extras/extension-curve.git

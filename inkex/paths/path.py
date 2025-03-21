@@ -37,7 +37,7 @@ from ..transforms import (
 )
 from ..utils import strargs
 
-from .lines import Line, Move, move, ZoneClose
+from .lines import Line, Move, move, ZoneClose, zoneClose
 from .curves import Curve
 from .interfaces import (
     ILengthSettings,
@@ -533,6 +533,21 @@ class Path(list):
             if seg.letter in "ctqsCTQS":
                 prev_prev = seg.ccontrol_points(first, previous, prev_prev)[-2]
             previous = seg.cend_point(first, previous)
+
+    def subpath_iterator(self):
+        """Yield Path for each subpath."""
+        start_id = 0
+
+        for i, seg in enumerate(self):
+            if isinstance(seg, (move, Move)):
+                if start_id > -1 and i > 0:  # add previous path (open path)
+                    yield Path(self[start_id:i])
+                start_id = i
+            elif isinstance(seg, (zoneClose, ZoneClose)):  # add current path (closed)
+                yield Path(self[start_id : i + 1])
+                start_id = -1
+            elif i == len(self) - 1 and start_id > -1:  # add last path (open)
+                yield Path(self[start_id:])
 
     def to_absolute(self):
         """Convert this path to use only absolute coordinates"""
