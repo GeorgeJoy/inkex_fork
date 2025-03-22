@@ -32,6 +32,20 @@ class DXFOutlineTestPxUnit(ComparisonMixin, TestCase):
     compare_filters = [WindowsTextCompat()]
 
 
+class DXFOutlineTestNonANSI(ComparisonMixin, TestCase):
+    """Test for issues:
+    https://gitlab.com/inkscape/extensions/-/issues/593
+    https://gitlab.com/inkscape/extensions/-/issues/586
+    """
+
+    effect_class = DxfOutlines
+    compare_file = ["svg/non_ansi_characters.svg"]
+    comparisons = [
+        (),
+    ]
+    compare_filters = [WindowsTextCompat()]
+
+
 def run_extension(document, *args) -> str:
     output = BytesIO()
     ext = DxfOutlines()

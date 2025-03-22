@@ -146,7 +146,7 @@ class OutputExtension(SvgInputMixin, TempDirMixin, InkscapeExtension):
             errormsg(_("An error occurred during document preparation"))
             errormsg(err.stderr.decode("utf-8"))
 
-        with open(infile, "r") as stream:
+        with open(infile, "r", encoding="utf-8") as stream:
             self.document = load_svg(stream)
             self.svg = self.document.getroot()
 
