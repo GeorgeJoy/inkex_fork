@@ -26,7 +26,11 @@ python = "^3.10"
 PyGObject = {version = ">=3.36", markers = "platform_system!='Windows'"}
 pySerial = "^3.4"
 lxml = "^4.5.0 || ^5.0.0 || ^6.0.0"
-numpy = ">=1.21.2, <3.0.0" #numpy incorrectly specifies its required Python version until 1.21.2
+numpy = [
+    #latest numpy versions depend on recent python versions
+    {version = ">=1.21.2, <2.3.0", python = "^3.10, <3.11"},
+    {version = ">=2.3.4, <3.0.0", python = ">=3.11, <3.15"}
+]
 Pillow = ">=7.0.0" # Used by RasterOutputExtension
 scour = "^0.37" # Used by Optimized SVG Extension
 packaging = ">=20.3" # Used by Optimized SVG Extension to compare scour versions
