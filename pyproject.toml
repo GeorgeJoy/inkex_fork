@@ -23,7 +23,6 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.10"
-PyGObject = {version = ">=3.36", markers = "platform_system!='Windows'"}
 pySerial = "^3.4"
 lxml = "^4.5.0 || ^5.0.0 || ^6.0.0"
 numpy = [
